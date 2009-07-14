@@ -21,13 +21,13 @@
 
 #include "cdstring.h"
 
-#include <vector.h>
+#include <vector>
 
 namespace xmllib
 {
 
 class XMLName;
-typedef vector<XMLName> XMLNameList;
+typedef std::vector<XMLName> XMLNameList;
 class XMLNode;
 
 class XMLName

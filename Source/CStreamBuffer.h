@@ -19,7 +19,6 @@
 
 #include <stdint.h>
 #include <istream>
-using namespace std;
 
 class CStreamBuffer
 {
@@ -27,7 +26,7 @@ public:
 	CStreamBuffer();
 	virtual ~CStreamBuffer();
 
-	void SetStream(istream& is);
+	void SetStream(std::istream& is);
 	void SetData(const char* data);
 
 	char operator*()
@@ -65,7 +64,7 @@ public:
 	}
 
 private:
-	istream*		mStream;
+	std::istream*		mStream;
 	const char*		mData;
 	const char*	 	bbegin;
 	const char* 	bnext;

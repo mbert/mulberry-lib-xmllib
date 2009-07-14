@@ -21,7 +21,6 @@
 #include <ostream>
 #include <vector>
 
-using namespace std;
 
 #include "cdstring.h"
 
@@ -46,7 +45,7 @@ public:
 	const cdstring&		GetNamespace(uint32_t index) const;
 	const cdstring&		GetNamespacePrefix(uint32_t index) const;
 	
-	void	Generate(ostream& os, bool indent = true) const;
+	void	Generate(std::ostream& os, bool indent = true) const;
 
 protected:
 	XMLNode*			mRoot;				// Root element of document

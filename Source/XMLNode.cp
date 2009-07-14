@@ -524,7 +524,7 @@ cdstring XMLNode::GetPrefixName() const
 	return result;
 }
 
-void XMLNode::Generate(ostream& os, uint32_t level, bool indent)
+void XMLNode::Generate(std::ostream& os, uint32_t level, bool indent)
 {
 	// Initially we will not do xmlns shortcuts
 	
@@ -547,7 +547,7 @@ void XMLNode::Generate(ostream& os, uint32_t level, bool indent)
 	// See if we have an empty tag and close it
 	if (mData.empty() && mChildren.empty())
 	{
-		os << "/>" << endl;
+		os << "/>" << std::endl;
 		return;
 	}
 	else
@@ -556,7 +556,7 @@ void XMLNode::Generate(ostream& os, uint32_t level, bool indent)
 	// Do children
 	if (mChildren.size())
 	{
-		os << endl;
+		os << std::endl;
 		GenerateChildren(os, level + 1, indent);
 	}
 
@@ -572,10 +572,10 @@ void XMLNode::Generate(ostream& os, uint32_t level, bool indent)
 	}
 
 	// End tag
-	os << "</" << GetPrefixName() << ">" << endl;
+	os << "</" << GetPrefixName() << ">" << std::endl;
 }
 
-void XMLNode::GenerateChildren(ostream& os, uint32_t level, bool indent)
+void XMLNode::GenerateChildren(std::ostream& os, uint32_t level, bool indent)
 {
 	// Now do children
 	for(XMLNodeList::const_iterator iter = mChildren.begin(); iter != mChildren.end(); iter++)
@@ -585,10 +585,10 @@ void XMLNode::GenerateChildren(ostream& os, uint32_t level, bool indent)
 }
 
 // Useful for debugging - this does not do namespace shortcuts
-void XMLNode::DebugPrint(ostream& os, uint32_t level) const
+void XMLNode::DebugPrint(std::ostream& os, uint32_t level) const
 {
 	// Always start new line for new node
-	os << endl;
+	os << std::endl;
 
 	// Indent
 	for(uint32_t ctr = 0; ctr < level; ctr++)
@@ -603,7 +603,7 @@ void XMLNode::DebugPrint(ostream& os, uint32_t level) const
 	// See if we have an empty tag and close it
 	if (mData.empty() && mChildren.empty())
 	{
-		os << "/>" << endl;
+		os << "/>" << std::endl;
 		return;
 	}
 	else
@@ -627,7 +627,7 @@ void XMLNode::DebugPrint(ostream& os, uint32_t level) const
 	}
 
 	// End tag
-	os << "</" << GetPrefixName() << ">" << endl;
+	os << "</" << GetPrefixName() << ">" << std::endl;
 }
 
 }

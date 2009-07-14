@@ -25,7 +25,6 @@
 #include <stdint.h>
 #include <map>
 
-using namespace std;
 
 #include "cdstring.h"
 
@@ -33,8 +32,8 @@ namespace xmllib
 {
 
 class XMLNode;
-typedef list<XMLNode*> XMLNodeList;
-typedef map<cdstring, XMLNode*> XMLNodeMap;
+typedef std::list<XMLNode*> XMLNodeList;
+typedef std::map<cdstring, XMLNode*> XMLNodeMap;
 
 class XMLDocument;
 class XMLNamespace;
@@ -188,14 +187,14 @@ public:
 	cdstring GetPrefixName() const;
 
 	// Generating XML
-	void Generate(ostream& os, uint32_t level = 0, bool indent = true);
-	void GenerateChildren(ostream& os, uint32_t level = 0, bool indent = true);
+	void Generate(std::ostream& os, uint32_t level = 0, bool indent = true);
+	void GenerateChildren(std::ostream& os, uint32_t level = 0, bool indent = true);
 	
 	// Useful for debugging
-	void DebugPrint(ostream& os, uint32_t level = 0) const;
+	void DebugPrint(std::ostream& os, uint32_t level = 0) const;
 
 private:
-	typedef map<cdstring, uint32_t>	XMLNamespaceLookup;
+	typedef std::map<cdstring, uint32_t>	XMLNamespaceLookup;
 
 	XMLDocument*		mDocument;
 	XMLNode*			mParent;

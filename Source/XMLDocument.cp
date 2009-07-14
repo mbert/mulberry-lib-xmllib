@@ -80,7 +80,7 @@ const cdstring& XMLDocument::GetNamespacePrefix(uint32_t index) const
 	return mNamespaces.at(index).Prefix();
 }
 
-void XMLDocument::Generate(ostream& os, bool indent) const
+void XMLDocument::Generate(std::ostream& os, bool indent) const
 {
 	// Handle namespace:
 	//  Make sure each namespace has a unique prefix
@@ -124,7 +124,7 @@ void XMLDocument::Generate(ostream& os, bool indent) const
 	}
 	
 	// Do declaration
-	os << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" << endl;
+	os << "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" << std::endl;
 	
 	// Do each child of the main root element
 	mRoot->Generate(os, 0, indent);

@@ -74,7 +74,7 @@ CStreamBuffer& CStreamBuffer::operator+=(uint32_t bump)
 	return *this;
 }
 
-void CStreamBuffer::SetStream(istream& is)
+void CStreamBuffer::SetStream(std::istream& is)
 {
 	// Create internal buffer
 	beof = bnext = bbegin = new char[cBufferSize];

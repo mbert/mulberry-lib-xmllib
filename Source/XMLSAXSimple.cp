@@ -39,7 +39,7 @@ void XMLSAXSimple::ParseData(const char* data)
 
 void XMLSAXSimple::ParseFile(const char* file)
 {
-	ifstream fin(file);
+	std::ifstream fin(file);
 	if (fin.fail())
 		return;
 
@@ -47,7 +47,7 @@ void XMLSAXSimple::ParseFile(const char* file)
 	ParseIt();
 }
 
-void XMLSAXSimple::ParseStream(istream& is)
+void XMLSAXSimple::ParseStream(std::istream& is)
 {
 	if (is.fail())
 		return;
@@ -475,7 +475,7 @@ bool XMLSAXSimple::ParseElementEnd()
 bool XMLSAXSimple::ParseCharacters()
 {
 	// Read legal characters
-	ostrstream data;
+	std::ostrstream data;
 	bool only_whitespace = true;
 	while(!mBuffer.fail() && (*mBuffer != '<'))
 	{
@@ -558,7 +558,7 @@ bool XMLSAXSimple::ParseCharacters()
 bool XMLSAXSimple::ParseCDATA()
 {
 	// Read legal characters
-	ostrstream data;
+	std::ostrstream data;
 	while(!mBuffer.fail())
 	{
 		// Look for entity
@@ -591,13 +591,13 @@ bool XMLSAXSimple::ParseCDATA()
 void XMLSAXSimple::XMLDecode(cdstring& value)
 {
 	// Look for any entities
-	if (value.find('&') == string::npos)
+	if (value.find('&') == std::string::npos)
 		return;
 	
-	ostrstream data;
-	string::size_type start_pos = 0;
-	string::size_type end_pos = value.find('&', start_pos);
-	while(end_pos != string::npos)
+	std::ostrstream data;
+	std::string::size_type start_pos = 0;
+	std::string::size_type end_pos = value.find('&', start_pos);
+	while(end_pos != std::string::npos)
 	{
 		// Copy up to the current position
 		data.write(value.c_str() + start_pos, end_pos - start_pos);

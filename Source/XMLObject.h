@@ -21,7 +21,6 @@
 
 #include <stdint.h>
 
-using namespace std;
 
 #include "cdstring.h"
 

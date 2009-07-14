@@ -36,7 +36,7 @@ public:
 
 	virtual void ParseData(const char* data);
 	virtual void ParseFile(const char* filename);
-	virtual void ParseStream(istream& is);
+	virtual void ParseStream(std::istream& is);
 
 protected:
 	CStreamBuffer	mBuffer;
