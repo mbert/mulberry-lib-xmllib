@@ -16,6 +16,8 @@
 
 #include "CStreamBuffer.h"
 
+#include <cstring>
+
 const int cBufferSize = 8192;
 
 CStreamBuffer::CStreamBuffer()

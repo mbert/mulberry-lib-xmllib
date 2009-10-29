@@ -18,6 +18,7 @@
 
 #include "XMLSAXSimple.h"
 
+#include <cstdlib>
 #include <fstream>
 #include <strstream>
 
