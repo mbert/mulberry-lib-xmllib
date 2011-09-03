@@ -51,6 +51,7 @@ public:
 		{ if (this != &copy) _copy(copy); return *this; }
 	
 	int operator==(const XMLName& comp) const;
+	int operator<(const XMLName& comp) const;
 	
 	// Data
 	void SetItems(const char* name = NULL, const char* namespc = NULL, bool take_ownership = false)

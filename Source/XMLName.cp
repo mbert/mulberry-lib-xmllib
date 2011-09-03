@@ -46,6 +46,15 @@ int XMLName::operator==(const XMLName& comp) const
 	return 1;
 }
 
+int XMLName::operator<(const XMLName& comp) const
+{
+	int cmp = ::strcmp(mNamespace, comp.mNamespace);
+	if ((cmp < 0) || ((cmp == 0) && (::strcmp(mName, comp.mName) < 0)))
+		return 1;
+	else
+		return 0;
+}
+
 // Full name - cached when needed
 const cdstring& XMLName::FullName() const
 {
