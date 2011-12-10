@@ -1,5 +1,5 @@
 #
-# Makefile for Mulberry's CICalendar Lib
+# Makefile for Mulberry's XMLLib Lib
 #
 # Compatibility: GNU
 #
@@ -30,7 +30,7 @@ D = .so
 #
 # Name of target object files:
 #
-LIBRARY = libCICalendar
+LIBRARY = libXMLLib
 LIBDIR = $(DESTDIR)$(prefix)/lib
 INCDIR = $(DESTDIR)$(prefix)/include
 OBJS = \
