@@ -524,7 +524,7 @@ cdstring XMLNode::GetPrefixName() const
 	return result;
 }
 
-void XMLNode::Generate(std::ostream& os, uint32_t level, bool indent)
+void XMLNode::Generate(std::ostream& os, uint32_t level, bool indent) const
 {
 	// Initially we will not do xmlns shortcuts
 	
@@ -562,7 +562,7 @@ void XMLNode::Generate(std::ostream& os, uint32_t level, bool indent)
 
 	// Now do data
 	if (!mData.empty())
-		os << mData;
+		GenerateData(os, mData);
 	
 	// Indent
 	if (indent && (mChildren.size() != 0))
@@ -575,13 +575,78 @@ void XMLNode::Generate(std::ostream& os, uint32_t level, bool indent)
 	os << "</" << GetPrefixName() << ">" << std::endl;
 }
 
-void XMLNode::GenerateChildren(std::ostream& os, uint32_t level, bool indent)
+void XMLNode::GenerateChildren(std::ostream& os, uint32_t level, bool indent) const
 {
 	// Now do children
 	for(XMLNodeList::const_iterator iter = mChildren.begin(); iter != mChildren.end(); iter++)
 	{
 		(*iter)->Generate(os, level, indent);
 	}
+}
+
+const char cXMLReserved[] = // XML chars to escape
+  { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 0 - 15
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 16 - 31
+    0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0,		// 32 - 47
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0,		// 48 - 63
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 64 - 79
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 80 - 95
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 96 - 111
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 112 - 127
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 128 - 143
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 144 - 159
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 160 - 175
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 176 - 191
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 192 - 207
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 208 - 223
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,		// 224 - 239
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };	// 240 - 255
+
+void XMLNode::GenerateData(std::ostream& os, const cdstring& data) const
+{
+    const char* p = data.c_str();
+	if (!p) return;
+
+	// count number of escapes
+	const char* q = p;
+	while(*q)
+	{
+		// Look for escape
+		if (cXMLReserved[(unsigned char) *q] == 1)
+        {
+            // Write outstanding data
+            if (q > p)
+                os.write(p, q - p);    
+            
+            // Do escape
+            switch(*q)
+            {
+            case '"':
+                os << "&quot;";
+                break;
+            case '&':
+                os << "&amp;";
+                break;
+            case '\'':
+                os << "&apos;";
+                break;
+            case '<':
+                os << "&lt;";
+                break;
+            case '>':
+                os << "&gt;";
+                break;
+            }
+            q++;
+            p = q;
+        }
+        else
+            q++;
+	}
+
+    // Write remainder
+    if (q > p)
+        os.write(p, q - p);    
 }
 
 // Useful for debugging - this does not do namespace shortcuts
@@ -617,7 +682,7 @@ void XMLNode::DebugPrint(std::ostream& os, uint32_t level) const
 	
 	// Now do data
 	if (!mData.empty())
-		os << mData;
+		GenerateData(os, mData);
 	
 	// Indent
 	if (mChildren.size() != 0)

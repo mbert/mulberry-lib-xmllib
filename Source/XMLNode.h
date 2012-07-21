@@ -187,8 +187,9 @@ public:
 	cdstring GetPrefixName() const;
 
 	// Generating XML
-	void Generate(std::ostream& os, uint32_t level = 0, bool indent = true);
-	void GenerateChildren(std::ostream& os, uint32_t level = 0, bool indent = true);
+	void Generate(std::ostream& os, uint32_t level = 0, bool indent = true) const;
+	void GenerateChildren(std::ostream& os, uint32_t level = 0, bool indent = true) const;
+	void GenerateData(std::ostream& os, const cdstring& data) const;
 	
 	// Useful for debugging
 	void DebugPrint(std::ostream& os, uint32_t level = 0) const;
